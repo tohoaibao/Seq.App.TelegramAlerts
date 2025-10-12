@@ -29,9 +29,9 @@ jobs:
       run: dotnet restore ${{ env.PROJECT_FILE_PATH }}
 
     - name: 4. Determine Version (GitVersion)
-      uses: GitTools/actions/gitversion@v3.0.0
+      uses: GitTools/actions/gitversion@v4.1.0
       id: gitversion
-      
+
     - name: 5. Build Project
       run: dotnet build ${{ env.PROJECT_FILE_PATH }} --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
       
