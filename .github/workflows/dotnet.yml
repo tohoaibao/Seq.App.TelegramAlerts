@@ -32,10 +32,7 @@ jobs:
       working-directory: ${{ github.workspace }}
       
       run: |
-        # Chạy GitVersion để tạo biến môi trường
-        dotnet-gitversion /output buildserver
-        
-        # Lấy giá trị phiên bản và gán vào biến môi trường PACKAGE_VERSION
+        dotnet-gitversion /output buildserver        
         $version = dotnet-gitversion -output json | jq -r '.NuGetVersionV2'
         echo "PACKAGE_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
         
@@ -46,14 +43,9 @@ jobs:
       run: dotnet build ${{ env.PROJECT_FILE_PATH }} --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
       
     - name: 7. Pack NuGet Package
-      id: package_pack 
+      id: pack
       run: |
-        # Sử dụng biến môi trường PACKAGE_VERSION đã được tạo ở bước 4
-        dotnet pack ${{ env.PROJECT_FILE_PATH }} \
-          --configuration ${{ env.BUILD_CONFIGURATION }} \
-          --no-build \
-          /p:Version=${{ env.PACKAGE_VERSION }} \
-          --output ${{ github.workspace }}/nuget_packages
+        dotnet pack ${{ env.PROJECT_FILE_PATH }} --configuration ${{ env.BUILD_CONFIGURATION }} --no-build /p:Version=${{ env.PACKAGE_VERSION }} --output ${{ github.workspace }}/nuget_packages
 
     - name: 8. Publish to NuGet Gallery
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
