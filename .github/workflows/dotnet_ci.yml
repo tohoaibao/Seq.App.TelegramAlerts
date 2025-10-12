@@ -1,0 +1,57 @@
+name: .NET CI/CD (Build & Publish)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  PROJECT_FILE_PATH: src/Seq.App.TelegramAlerts.csproj
+  BUILD_CONFIGURATION: Release
+
+jobs:
+  build_and_publish:
+    runs-on: windows-latest
+
+    steps:
+    - name: 1. Checkout Code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: 2. Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: 3. Restore Dependencies
+      run: dotnet restore ${{ env.PROJECT_FILE_PATH }}
+
+    - name: 4. Determine Version (GitVersion)
+      uses: GitTools/actions/gitversion@v1.2.0
+      id: gitversion
+      
+    - name: 5. Build Project
+      run: dotnet build ${{ env.PROJECT_FILE_PATH }} --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
+      
+    - name: 6. Pack NuGet Package
+      id: pack
+      run: |
+        # Đóng gói và truyền phiên bản SemVer đã tạo bởi GitVersion
+        # OutputDirectory là nơi file .nupkg được tạo ra
+        dotnet pack ${{ env.PROJECT_FILE_PATH }} \
+          --configuration ${{ env.BUILD_CONFIGURATION }} \
+          --no-build \
+          /p:Version=${{ steps.gitversion.outputs.NuGetVersionV2 }} \
+          --output ${{ github.workspace }}/nuget_packages
+          
+    - name: 7. Publish to NuGet Gallery
+      if: github.ref == 'refs/heads/main'
+      uses: nuget/setup-nuget@v1
+      with:
+        nuget-api-key: ${{ secrets.NUGET_API_KEY }}
+        
+    - name: 8. Push Package to NuGet
+      if: github.ref == 'refs/heads/main'
+      run: dotnet nuget push ${{ github.workspace }}/nuget_packages/*.nupkg --source https://api.nuget.org/v3/index.json
