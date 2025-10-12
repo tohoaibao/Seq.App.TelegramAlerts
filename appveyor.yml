@@ -1,31 +1,30 @@
+# appveyor.yml
+
 version: 2.0.{build}
-branches:
-  only:
-  - master
 image: Visual Studio 2022
-build:
-  project: src/Seq.App.TelegramAlerts.csproj
-  verbosity: minimal
+
 
 cache:
-  - C:\ProgramData\chocolatey\bin -> appveyor.yml
-  - C:\ProgramData\chocolatey\lib -> appveyor.yml
   - '%USERPROFILE%\.nuget\packages'
-
-nuget:
-  project_feed: true
 
 install:
   - choco install gitversion.portable -pre -y
 
 before_build:
   - cmd: gitversion /l console /output buildserver /updateAssemblyInfo
-  - ps: Update-AppveyorBuild -Version $GitVersion_NuGetVersion
+  - ps: Update-AppveyorBuild -Version $GitVersion_NuGetVersion  
+  - cmd: dotnet restore src/Seq.App.TelegramAlerts.csproj
+
+build:
+  project: src/Seq.App.TelegramAlerts.csproj
+  verbosity: minimal
 
 after_build:
-  - cmd: cd src/Seq.App.TelegramAlerts
-  - cmd: dotnet publish -c Release -o ./obj/publish
-  - cmd: dotnet pack --no-build -c Release -o ./bin/nuget -p:PackageVersion="%GitVersion_NuGetVersion%"
-  - ps: Get-ChildItem -Recurse *.nupkg | % { Push-AppveyorArtifact $_ -FileName $_.Name }
-  - ps: Get-ChildItem -Recurse *.nupkg | % { dotnet nuget push -s "https://api.nuget.org/v3/index.json" -k $env:NuGet_Key $_.FullName }
- 
+  - dotnet pack src/Seq.App.TelegramAlerts.csproj -c Release --no-build -p:PackageVersion=$GitVersion_NuGetVersion  
+  - ps: Get-ChildItem **\*.nupkg | % { dotnet nuget push $_.FullName -s "https://api.nuget.org/v3/index.json" -k $env:NUGET_API_KEY }
+
+deploy:
+  provider: Environment
+  name: NuGet_Deployment_Prod
+  on:
+    branch: main 
