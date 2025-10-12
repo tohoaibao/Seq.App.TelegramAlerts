@@ -3,8 +3,14 @@ name: .NET CI/CD (Build & Publish)
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'src/**'
+      - '.github/workflows/dotnet.yml'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'src/**'
+      - '.github/workflows/dotnet.yml'
 
 env:
   PROJECT_FILE_PATH: src/Seq.App.TelegramAlerts.csproj
@@ -51,4 +57,4 @@ jobs:
 
     - name: 8. Publish to NuGet Gallery
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: dotnet nuget push nuget_packages\*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      run: dotnet nuget push nuget_packages\*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
