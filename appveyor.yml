@@ -3,7 +3,6 @@
 version: 2.0.{build}
 image: Visual Studio 2022
 
-
 cache:
   - '%USERPROFILE%\.nuget\packages'
 
@@ -12,7 +11,7 @@ install:
 
 before_build:
   - cmd: gitversion /l console /output buildserver /updateAssemblyInfo
-  - ps: Update-AppveyorBuild -Version $GitVersion_NuGetVersion  
+  - ps: Update-AppveyorBuild -Version $GitVersion_NuGetVersion
   - cmd: dotnet restore src/Seq.App.TelegramAlerts.csproj
 
 build:
@@ -20,11 +19,9 @@ build:
   verbosity: minimal
 
 after_build:
-  - dotnet pack src/Seq.App.TelegramAlerts.csproj -c Release --no-build -p:PackageVersion=$GitVersion_NuGetVersion  
-  - ps: Get-ChildItem **\*.nupkg | % { dotnet nuget push $_.FullName -s "https://api.nuget.org/v3/index.json" -k $env:NUGET_API_KEY }
-
+  - ps: dotnet pack src/Seq.App.TelegramAlerts.csproj -c Release --no-build -o "$($env:APPVEYOR_BUILD_FOLDER)\bin\nuget" -p:PackageVersion=$env:GitVersion_NuGetVersion
 deploy:
   provider: Environment
   name: NuGet_Deployment_Prod
   on:
-    branch: main 
+    branch: main
