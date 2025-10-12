@@ -30,7 +30,6 @@ jobs:
 
     - name: 4. Determine Version
       working-directory: ${{ github.workspace }}
-      
       run: |
         dotnet-gitversion /output buildserver        
         $version = dotnet-gitversion -output json | jq -r '.NuGetVersionV2'
@@ -45,8 +44,11 @@ jobs:
     - name: 7. Pack NuGet Package
       id: pack
       run: |
-        dotnet pack ${{ env.PROJECT_FILE_PATH }} --configuration ${{ env.BUILD_CONFIGURATION }} --no-build /p:Version=${{ env.PACKAGE_VERSION }} --output ${{ github.workspace }}/nuget_packages
+        dotnet pack ${{ env.PROJECT_FILE_PATH }} --configuration ${{ env.BUILD_CONFIGURATION }} --no-build /p:Version=${{ env.PACKAGE_VERSION }} --output nuget_packages
+
+    - name: List NuGet Packages
+      run: dir nuget_packages
 
     - name: 8. Publish to NuGet Gallery
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: dotnet nuget push ${{ github.workspace }}/nuget_packages/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      run: dotnet nuget push nuget_packages\*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
