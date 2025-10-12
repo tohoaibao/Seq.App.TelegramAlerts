@@ -3,30 +3,22 @@
 version: 2.0.{build}
 image: Visual Studio 2022
 
-cache:
-  - '%USERPROFILE%\.nuget\packages'
-
 install:
   - choco install gitversion.portable -pre -y
 
 before_build:
   - cmd: gitversion /l console /output buildserver /updateAssemblyInfo
   - ps: Update-AppveyorBuild -Version $GitVersion_NuGetVersion
+  
   - cmd: dotnet restore src/Seq.App.TelegramAlerts.csproj
 
 build:
   project: src/Seq.App.TelegramAlerts.csproj
   verbosity: minimal
-  configuration: Release
 
 after_build:
-  - ps: |
-      if (-not $env:GitVersion_NuGetVersion) {
-        $env:GitVersion_NuGetVersion = "2.0.0"
-      }
-      Write-Host "Packing with version $env:GitVersion_NuGetVersion"
-      dotnet pack src/Seq.App.TelegramAlerts.csproj -c Release -o "$($env:APPVEYOR_BUILD_FOLDER)\bin\nuget" -p:PackageVersion=$env:GitVersion_NuGetVersion
-      
+  - ps: dotnet pack src/Seq.App.TelegramAlerts.csproj -c Release --no-build -o "$($env:APPVEYOR_BUILD_FOLDER)\bin\nuget" -p:PackageVersion=$env:GitVersion_NuGetVersion
+
 deploy:
   provider: Environment
   name: NuGet_Deployment_Prod
