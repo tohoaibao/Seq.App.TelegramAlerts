@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <PackageId>Seq.App.TelegramAlerts</PackageId>
+    <Version>2.0.0</Version>
+    <Description>An enhanced Seq APP for sending alerts to Telegram with Template syntax support via the Telegram Bot API. This app allows you to forward log events or notifications from Seq directly to a Telegram chat or group, making it easy to receive real-time alerts on your mobile device or desktop.</Description>
+    <Authors>GinCanhViet</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/GinCanhViet/Seq.App.TelegramAlerts</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageTags>seq-app seq serilog events telegram alerts template-syntax</PackageTags>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <RepositoryUrl>https://github.com/GinCanhViet/Seq.App.TelegramAlerts</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HttpToSocks5Proxy" Version="1.4.0" />
+    <PackageReference Include="Seq.Apps" Version="2023.4.0" />
+    <PackageReference Include="Seq.Syntax" Version="1.1.0" />
+    <PackageReference Include="Telegram.Bot" Version="22.7.2" />
+    <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="/" Visible="true" />
+    <None Include="$(OutputPath)\publish\MihaZupan.HttpToSocks5Proxy.dll" Pack="true" PackagePath="lib\$(TargetFramework)" />
+    <None Include="$(OutputPath)\publish\Telegram.Bot.dll" Pack="true" PackagePath="lib\$(TargetFramework)" />
+    <None Include="$(OutputPath)\publish\Seq.App.TelegramAlerts.deps.json" Pack="true" PackagePath="lib\$(TargetFramework)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
+
+</Project>
