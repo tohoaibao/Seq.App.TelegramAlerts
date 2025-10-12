@@ -17,6 +17,7 @@ before_build:
 build:
   project: src/Seq.App.TelegramAlerts.csproj
   verbosity: minimal
+  configuration: Release
 
 after_build:
   - ps: |
@@ -24,7 +25,8 @@ after_build:
         $env:GitVersion_NuGetVersion = "2.0.0"
       }
       Write-Host "Packing with version $env:GitVersion_NuGetVersion"
-      dotnet pack src/Seq.App.TelegramAlerts.csproj -c Release --no-build -o "$($env:APPVEYOR_BUILD_FOLDER)\bin\nuget" -p:PackageVersion=$env:GitVersion_NuGetVersion
+      dotnet pack src/Seq.App.TelegramAlerts.csproj -c Release -o "$($env:APPVEYOR_BUILD_FOLDER)\bin\nuget" -p:PackageVersion=$env:GitVersion_NuGetVersion
+      
 deploy:
   provider: Environment
   name: NuGet_Deployment_Prod
