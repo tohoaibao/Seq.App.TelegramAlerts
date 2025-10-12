@@ -2,7 +2,6 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <PackageId>Seq.App.TelegramAlerts</PackageId>
-    <Version>2.0.0</Version>
     <Description>An enhanced Seq APP for sending alerts to Telegram with Template syntax support via the Telegram Bot API. This app allows you to forward log events or notifications from Seq directly to a Telegram chat or group, making it easy to receive real-time alerts on your mobile device or desktop.</Description>
     <Authors>GinCanhViet</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -25,13 +24,12 @@
 
   <ItemGroup>
     <None Include="icon.png" Pack="true" PackagePath="/" Visible="true" />
-    <None Include="$(OutputPath)\publish\MihaZupan.HttpToSocks5Proxy.dll" Pack="true" PackagePath="lib\$(TargetFramework)" />
-    <None Include="$(OutputPath)\publish\Telegram.Bot.dll" Pack="true" PackagePath="lib\$(TargetFramework)" />
-    <None Include="$(OutputPath)\publish\Seq.App.TelegramAlerts.deps.json" Pack="true" PackagePath="lib\$(TargetFramework)" />
+    <None Include="$(OutputPath)\MihaZupan.HttpToSocks5Proxy.dll" Pack="true" PackagePath="lib\$(TargetFramework)" />
+    <None Include="$(OutputPath)\Telegram.Bot.dll" Pack="true" PackagePath="lib\$(TargetFramework)" />
+    <None Include="$(OutputPath)\Seq.App.TelegramAlerts.deps.json" Pack="true" PackagePath="lib\$(TargetFramework)" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
-
 </Project>
