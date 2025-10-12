@@ -29,31 +29,31 @@ jobs:
       run: dotnet tool install --global GitVersion.Tool --version 5.* || dotnet tool update --global GitVersion.Tool --version 5.*
 
     - name: 4. Determine Version
-      id: gitversion
       working-directory: ${{ github.workspace }}
       
       run: |
+        # Chạy GitVersion để tạo biến môi trường
         dotnet-gitversion /output buildserver
         
+        # Lấy giá trị phiên bản và gán vào biến môi trường PACKAGE_VERSION
         $version = dotnet-gitversion -output json | jq -r '.NuGetVersionV2'
         echo "PACKAGE_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-      
+        
     - name: 5. Restore Dependencies
       run: dotnet restore ${{ env.PROJECT_FILE_PATH }}
-
-    - name: 6. Pack NuGet Package
-      id: pack
+      
+    - name: 6. Build Project
+      run: dotnet build ${{ env.PROJECT_FILE_PATH }} --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
+      
+    - name: 7. Pack NuGet Package
+      id: package_pack 
       run: |
+        # Sử dụng biến môi trường PACKAGE_VERSION đã được tạo ở bước 4
         dotnet pack ${{ env.PROJECT_FILE_PATH }} \
           --configuration ${{ env.BUILD_CONFIGURATION }} \
           --no-build \
-          /p:Version=${{ steps.gitversion.outputs.NuGetVersionV2 }} \
+          /p:Version=${{ env.PACKAGE_VERSION }} \
           --output ${{ github.workspace }}/nuget_packages
-
-    - name: 7. Pack NuGet Package
-      id: pack
-      run: |
-        dotnet pack ${{ env.PROJECT_FILE_PATH }} --configuration ${{ env.BUILD_CONFIGURATION }} --no-build /p:Version=${{ env.PACKAGE_VERSION }} --output ${{ github.workspace }}/nuget_packages
 
     - name: 8. Publish to NuGet Gallery
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
