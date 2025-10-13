@@ -26,7 +26,9 @@ namespace Seq.App.TelegramAlerts
         [SeqAppSetting(DisplayName = "Seq Base URL", HelpText = "Used for generating permalinks to events in Telegram messages.", IsOptional = true)]
         public string BaseUrl { get; set; }
 
-        [SeqAppSetting(HelpText = "The message template to use when writing the message to Telegram. Use Seq template syntax (e.g., {Level}, {@x}, {ToIsoString(@t)}). The default is \"{@mt}\"", InputType = SettingInputType.LongText, IsOptional = true)]
+        [SeqAppSetting(HelpText = "The message template to use when writing the message to Telegram. Use Seq template syntax (e.g., {Level}, {@x}, {Substring(@x, 0, 200)})." +
+            " The default is {RenderedMessage}." +
+            " Refer: https://datalust.co/docs/template-syntax", InputType = SettingInputType.LongText, IsOptional = true)]
         public string MessageTemplate { get; set; }
 
         [SeqAppSetting(DisplayName = "Suppression time (minutes)", IsOptional = true, HelpText = "Once an event type has been sent to Telegram, the time to wait before sending again. The default is zero.")]

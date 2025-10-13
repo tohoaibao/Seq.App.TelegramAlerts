@@ -17,7 +17,7 @@ namespace Seq.App.TelegramAlerts
         public MessageFormatter(string baseUrl, string messageTemplate)
         {
             _baseUrl = baseUrl;
-            _messageTemplate = string.IsNullOrWhiteSpace(messageTemplate) ? "{@mt}" : messageTemplate;
+            _messageTemplate = string.IsNullOrWhiteSpace(messageTemplate) ? "{RenderedMessage}" : messageTemplate;
         }
 
         public string GenerateMessageText(Event<LogEventData> evt)

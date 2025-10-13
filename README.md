@@ -3,27 +3,26 @@
 
 [![Build Status](https://github.com/GinCanhViet/Seq.App.TelegramAlerts/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/GinCanhViet/Seq.App.TelegramAlerts/actions/workflows/dotnet.yml)
 
+A Seq app for sending alerts to Telegram via the Telegram Bot API. This app allows you to forward log events or notifications from Seq directly to a Telegram chat or group, making it easy to receive real-time alerts on your devices.
 
-A Seq app for sending alerts to Telegram via the Telegram Bot API. This app allows you to forward log events or notifications from Seq directly to a Telegram chat or group, making it easy to receive real-time alerts on your mobile device or desktop.
-
-*This project is inspired by and references code from Seq.App.Telegram. Initially, I used that project, but it did not support Seq's standard template syntax and only accessed event data from a manually mapped dictionary. Therefore, I created this project, which uses the official Seq.Syntax logic for template processing.*
+*This project is inspired by and references code from Seq.App.Telegram. Initially, I used that project, but it did not support Seq's standard template syntax and could only access event data from a manually mapped dictionary. Therefore, I created this project, which uses the official Seq.Syntax logic for template processing.*
 
 ## Features
 - Send log events from Seq to Telegram chats or groups
 - Template syntax support
 - Customizable message formatting
-- Socks5 proxy supported
-- Throttling to prevent alert spam
-- Easy configuration via Seq UI
+- Socks5 proxy support
+- Throttling support to prevent alert spam
+- Easy configuration via the Seq UI
 
 ## Template Syntax Support
-This app supports most of the **Basic template syntax** for formatting messages sent to Telegram.
+This app supports most of the basic template syntax for formatting messages sent to Telegram.
 
 - **Access Seq event properties** directly in your message template.
 - **Standard properties:**
 	- `@Level`, `@Message`, `@Exception`, `@Timestamp`, `@Properties`, `@MessageTemplate`, `@EventId`
 - **Short forms:**
-	- `@l`, `@m`, `@x`, `@t`, `@i`, `@p`, `@mt`
+	- `@l`, `@x`, `@t`, `@i`, `@p`, `@mt`
 - **Custom properties:**
 	- Example: `{Application}`, `{SourceContext}`, `{User}`, etc.
 - **Scalar functions:**
@@ -36,17 +35,17 @@ For more details, see: https://datalust.co/docs/template-syntax
 ### Prerequisites
 - [Seq](https://datalust.co/download) instance
 - A Telegram bot token (create via [@BotFather](https://t.me/botfather))
-- The chat ID of your target Telegram chat or group
-Chat id.
->Invite [@ShowJsonBot](https://telegram.me/ShowJsonBot) or [@RawDataBot](https://telegram.me/RawDataBot) into your chat and it will send you a message. Copy id value from chat section including leading minus. chat section example:
->```
->"chat": {
->   "title": "Your telegram Group Name",
->    "type": "group",
->    "all_members_are_administrators": true,
->    "id": -123456789 <===
->}
->```
+- The chat ID of your target Telegram chat or group.
+
+	Add your bot to your group. Send a message. Then invite [@ShowJsonBot](https://telegram.me/ShowJsonBot) or [@RawDataBot](https://telegram.me/RawDataBot) into your chat and it will send you a message. Copy id value from chat section including leading minus. chat section example:
+	```json
+	"chat": {
+	"title": "Your telegram Group Name",
+		"type": "group",
+		"all_members_are_administrators": true,
+		"id": -123456789	// Use this ID to target the group or topic
+	}
+	```
 
 ### Installation
 1. In Seq, go to **Settings > Apps > Install from NuGet** and search for `Seq.App.TelegramAlerts`.
@@ -63,10 +62,10 @@ Chat id.
 After installing the app into Seq, follow these steps:
 
 1. **Add a new instance:** In Seq `(settings/apps)`, click the **Add instance** button to create a new instance of the Telegram Alerts app.
-2. **Fill in the parameters:** Enter the required information as guided (Bot Token, Chat ID, etc.) and save the instance.
+2. **Fill in the parameters:** Enter the required information as guided (Bot Token, Chat ID, etc.) and save the instance. Make sure your bot has been added to your group.
 
 ### Example Message Template for Error Notifications
-You can use the following message template as a reference for error alerts:
+You can use the following message template as a reference for error notifications:
 
 ```
 *🚨 WARNING 🚨*
@@ -77,11 +76,13 @@ You can use the following message template as a reference for error alerts:
 *SourceContext:* `{SourceContext}`
 
 *Summary:*
-```{@mt}```
+```{RenderedMessage}```
 *Exception:*
 ```{Substring(@x, 0, 150)}...```
 ```
-
+![alt text](images/install-3.png)
+![alt text](images/install.png)
+![alt text](images/install-2.png)
 > **Note:**
 > The `{Link}` property is a custom property provided by this app. It generates a direct link to the event in Seq and is displayed in Telegram as a 🔗 icon.
 >
