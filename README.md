@@ -20,11 +20,14 @@ This app supports most of the basic template syntax for formatting messages sent
 
 - **Access Seq event properties** directly in your message template.
 - **Standard properties:**
-	- `@Level`, `@Message`, `@Exception`, `@Timestamp`, `@Properties`, `@MessageTemplate`, `@EventId`
+	- `Level`, `RenderedMessage`, `@Timestamp`, `Properties`, etc.
 - **Short forms:**
-	- `@l`, `@x`, `@t`, `@i`, `@p`, `@mt`
+	- `@l`, `@x`, `@t`, `@i`, `@p`, `@mt`, etc.
 - **Custom properties:**
 	- Example: `{Application}`, `{SourceContext}`, `{User}`, etc.
+
+	These properties such as `{Application}`, `{SourceContext}`, `{MachineName}`, etc. must be enriched in your logger configuration to be available in the event data.
+
 - **Scalar functions:**
 	- Functions like `Substring()` are supported (others not fully tested).
 
