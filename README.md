@@ -1,7 +1,7 @@
-# Seq.App.TelegramAlerts
-[![NuGet](https://img.shields.io/nuget/v/Seq.App.TelegramAlerts.svg?style=flat-square)](https://www.nuget.org/packages/Seq.App.TelegramAlerts/)
+# Seq.App.TelegramNotifier
+[![NuGet](https://img.shields.io/nuget/v/Seq.App.TelegramNotifier.svg?style=flat-square)](https://www.nuget.org/packages/Seq.App.TelegramNotifier/)
 
-[![Build Status](https://github.com/GinCanhViet/Seq.App.TelegramAlerts/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/GinCanhViet/Seq.App.TelegramAlerts/actions/workflows/dotnet.yml)
+[![Build Status](https://github.com/ToHoaiBao/Seq.App.TelegramNotifier/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/ToHoaiBao/Seq.App.TelegramNotifier/actions/workflows/dotnet.yml)
 
 A Seq app for sending alerts to Telegram via the Telegram Bot API. This app allows you to forward log events or notifications from Seq directly to a Telegram chat or group, making it easy to receive real-time alerts on your devices.
 
@@ -51,7 +51,7 @@ For more details, see: https://datalust.co/docs/template-syntax
 	```
 
 ### Installation
-1. In Seq, go to **Settings > Apps > Install from NuGet** and search for `Seq.App.TelegramAlerts`.
+1. In Seq, go to **Settings > Apps > Install from NuGet** and search for `Seq.App.TelegramNotifier`.
 2. Or build the project and use the generated `.nupkg` file in `bin/Release`.
 
 ### Configuration
@@ -97,4 +97,4 @@ You can use the following message template as a reference for error notification
 MIT
 
 ## Author
-GinCanhViet
+ToHoaiBao

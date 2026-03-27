@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Seq.App.TelegramAlerts.Extensions;
+using Seq.App.TelegramNotifier.Extensions;
 using Seq.Apps;
 using Seq.Apps.LogEvents;
 using Seq.Syntax.Templates;
 using Serilog.Events;
 
-namespace Seq.App.TelegramAlerts
+namespace Seq.App.TelegramNotifier
 {
     public class MessageFormatter
     {

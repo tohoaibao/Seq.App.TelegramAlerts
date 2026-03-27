@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 
 
-namespace Seq.App.TelegramAlerts
+namespace Seq.App.TelegramNotifier
 {
     public class Throttling<T> where T : notnull
     {

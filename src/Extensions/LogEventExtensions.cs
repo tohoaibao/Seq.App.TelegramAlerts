@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Seq.App.TelegramAlerts.Extensions
+namespace Seq.App.TelegramNotifier.Extensions
 {
     public static class LogEventDataExtensions
     {

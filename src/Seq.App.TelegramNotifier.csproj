@@ -1,17 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Version>1.0.2</Version>
-    <PackageId>Seq.App.TelegramAlerts</PackageId>
+    <Version>1.0.0</Version>
+    <PackageId>Seq.App.TelegramNotifier</PackageId>
     <Description>An enhanced Seq APP for sending alerts to Telegram with Template syntax support via the Telegram Bot API. This app allows you to forward log events or notifications from Seq directly to a Telegram chat or group, making it easy to receive real-time alerts on your mobile device or desktop.</Description>
-    <Authors>GinCanhViet</Authors>
+    <Authors>ToHoaiBao</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
-    <PackageProjectUrl>https://github.com/GinCanhViet/Seq.App.TelegramAlerts</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/ToHoaiBao/Seq.App.TelegramAlerts</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageTags>seq-app seq serilog events telegram alerts template-syntax</PackageTags>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <RepositoryUrl>https://github.com/GinCanhViet/Seq.App.TelegramAlerts</RepositoryUrl>
+    <RepositoryUrl>https://github.com/ToHoaiBao/Seq.App.TelegramAlerts</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
@@ -27,7 +27,7 @@
     <None Include="icon.png" Pack="true" PackagePath="/" Visible="true" />
     <None Include="$(OutputPath)\MihaZupan.HttpToSocks5Proxy.dll" Pack="true" PackagePath="lib\$(TargetFramework)" />
     <None Include="$(OutputPath)\Telegram.Bot.dll" Pack="true" PackagePath="lib\$(TargetFramework)" />
-    <None Include="$(OutputPath)\Seq.App.TelegramAlerts.deps.json" Pack="true" PackagePath="lib\$(TargetFramework)" />
+    <None Include="$(OutputPath)\Seq.App.TelegramNotifier.deps.json" Pack="true" PackagePath="lib\$(TargetFramework)" />
   </ItemGroup>
 
   <ItemGroup>
