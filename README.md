@@ -1,7 +1,7 @@
 # Seq.App.TelegramNotifier
 [![NuGet](https://img.shields.io/nuget/v/Seq.App.TelegramNotifier.svg?style=flat-square)](https://www.nuget.org/packages/Seq.App.TelegramNotifier/)
 
-[![Build Status](https://github.com/ToHoaiBao/Seq.App.TelegramNotifier/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/ToHoaiBao/Seq.App.TelegramNotifier/actions/workflows/dotnet.yml)
+[![Build Status](https://github.com/ToHoaiBao/Seq.App.TelegramAlerts/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/ToHoaiBao/Seq.App.TelegramAlerts/actions/workflows/dotnet.yml)
 
 A Seq app for sending alerts to Telegram via the Telegram Bot API. This app allows you to forward log events or notifications from Seq directly to a Telegram chat or group, making it easy to receive real-time alerts on your devices.
 
