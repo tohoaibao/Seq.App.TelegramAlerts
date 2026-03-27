@@ -6,6 +6,7 @@ on:
     paths:
       - 'src/**'
       - '.github/workflows/dotnet.yml'
+  workflow_dispatch:
   pull_request:
     branches: [ "main" ]
     paths:
