@@ -48,7 +48,3 @@ jobs:
     - name: 6. Publish to NuGet Gallery
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: dotnet nuget push nuget_packages\*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
-
-    - name: 7. Publish to GitHub Packages
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: dotnet nuget push nuget_packages\*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "https://nuget.pkg.github.com/GinCanhViet/index.json" --skip-duplicate
