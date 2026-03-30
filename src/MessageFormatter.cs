@@ -35,7 +35,12 @@ namespace Seq.App.TelegramNotifier
 
         private Dictionary<string, object> GetDynamicProperties(Event<LogEventData> evt)
         {
-            return new Dictionary<string, object> { ["Link"] = $"[\ud83d\udd17]({_baseUrl.TrimEnd('/')}/#/events?filter=@Id%3D%3D'{evt.Id}'&show=expanded)" };
+            return new Dictionary<string, object> 
+            { 
+                ["Link"] = $"[\ud83d\udd17]({_baseUrl.TrimEnd('/')}/#/events?filter=@Id%3D%3D'{evt.Id}'&show=expanded)",
+                ["EventId"] = evt.Id,
+                ["LocalTime"] = evt.Timestamp.ToLocalTime()
+            };
         }
     }
 }
